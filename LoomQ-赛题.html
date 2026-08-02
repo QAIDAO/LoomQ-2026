@@ -415,7 +415,7 @@ footer p{margin-top:10px;font-size:16px;color:var(--ink-soft);letter-spacing:.08
   </div>
   <p><strong>L2 到底要交付什么（按目标分数区分）</strong>：</p>
   <ul>
-    <li><strong>只做客观部分（最高 20 分）</strong>：不要求另做网页、App、桌面软件或图形界面。选手必须在 <code>starter-kit/adapter.py</code> 中提交可运行的 <code>agent_chat(prompt: str) -&gt; str</code>；评测器会直接调用该函数。函数须读取组委会注入的 <code>LOOMQ_LLM_*</code> 配置，至少完成一次有效模型调用，并在返回文本中正确完成下述三类任务。通过 API 调用配合 Prompt／Agent 逻辑实现即可，技术栈不限。</li>
+    <li><strong>只做客观部分（最高 20 分）</strong>：不要求另做网页、App、桌面软件或图形界面。选手必须在 <code>starter_kit/adapter.py</code> 中提交可运行的 <code>agent_chat(prompt: str) -&gt; str</code>；评测器会直接调用该函数。函数须读取组委会注入的 <code>LOOMQ_LLM_*</code> 配置，至少完成一次有效模型调用，并在返回文本中正确完成下述三类任务。通过 API 调用配合 Prompt／Agent 逻辑实现即可，技术栈不限。</li>
     <li><strong>冲完整 30 分</strong>：在上述可自动评测代码之外，再提供一个可由零基础用户现场操作的 Agent 入口。网页、桌面／移动端或 CLI 均可，不强制图形界面；工作人员以最终提交代码实际运行评分。</li>
     <li><strong>不构成有效交付</strong>：只提交 Prompt 文档、对话截图、录屏或由选手人工操作第三方聊天产品，均不能替代可运行的 <code>agent_chat</code> 代码或交互入口。</li>
   </ul>
@@ -456,7 +456,7 @@ cx q[0], q[1];</code></pre>
 <!-- 四、契约 -->
 <section id="contract" class="reveal">
   <div class="sec-head"><span class="sec-num">肆</span><h2>提交契约</h2></div>
-  <p>正式提交是选手对 <code>QAIDAO/LoomQ-2026</code> 的公开 fork，其中 <strong><code>starter-kit/</code> 是构建与评测根目录</strong>，必须提供 <code>submission.yaml</code> 与 <code>adapter.py</code>。非 Python 技术栈可通过 <code>subprocess</code> 调用自己的 CLI／二进制。</p>
+  <p>正式提交是选手对 <code>QAIDAO/LoomQ-2026</code> 的公开 fork，其中 <strong><code>starter_kit/</code> 是构建与评测根目录</strong>，必须提供 <code>submission.yaml</code> 与 <code>adapter.py</code>。非 Python 技术栈可通过 <code>subprocess</code> 调用自己的 CLI／二进制。</p>
   <p>Starter Kit 合同版本为 <strong>v1.0</strong>。开赛后 v1.x 只做向后兼容更新；原样 Starter Kit 不包含可得分 Mock、评分 Prompt 答案或 L3 参考实现。</p>
   <pre><code><span class="kw">def</span> transpile(qasm_str: str, target: str) -&gt; str:
     <span class="st">"""将 OpenQASM 2.0 转译为目标后端的原生指令字符串。target ∈ {'spinq','originq','braket'}"""</span>
@@ -488,7 +488,7 @@ cx q[0], q[1];</code></pre>
   <p>第三方依赖必须精确锁定版本。正式评测以提交系统记录的完整 40 位 commit SHA 为准，在隔离环境中逐 case 运行。</p>
   <h3>最终提交</h3>
   <ol>
-    <li>在 fork 根目录运行 <code>python3 starter-kit/prepare_submission.py --team-id &lt;TEAM_ID&gt;</code>。</li>
+    <li>在 fork 根目录运行 <code>python3 starter_kit/prepare_submission.py --team-id &lt;TEAM_ID&gt;</code>。</li>
     <li>在上游仓库创建“LoomQ 最终提交” Issue，填写队伍 ID、fork 地址与完整 SHA。</li>
     <li>获得 <code>submission:accepted</code> 标签和归档 SHA-256 回执后才算成功。</li>
   </ol>

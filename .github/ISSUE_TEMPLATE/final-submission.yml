@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        截止时间：**2026-08-25 12:00 UTC+8**。请先在 fork 中运行 `python3 starter-kit/prepare_submission.py --team-id <GITHUB_USERNAME>`。
+        截止时间：**2026-08-25 12:00 UTC+8**。请先在 fork 中运行 `python3 starter_kit/prepare_submission.py --team-id <GITHUB_USERNAME>`。
 
         本届不使用预登记名单：Team ID 必须填写当前 Issue 作者的 GitHub 用户名，fork 也必须归该账号所有。
 
@@ -38,7 +38,7 @@ body:
     id: levels
     attributes:
       label: Levels
-      description: 选择与 starter-kit/submission.yaml 一致的参赛 Level。
+      description: 选择与 starter_kit/submission.yaml 一致的参赛 Level。
       options:
         - label: L1
         - label: L2
@@ -50,7 +50,7 @@ body:
     attributes:
       label: Hardware evidence
       description: 如申报真机分，填写 fork 中的证据目录；否则留空。
-      placeholder: starter-kit/evidence/hardware/
+      placeholder: starter_kit/evidence/hardware/
   - type: checkboxes
     id: declarations
     attributes:

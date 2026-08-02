@@ -1,6 +1,6 @@
 # LoomQ 人工评分证据
 
-这份文件是人工评分材料的统一入口。请直接编辑它，只填写要申报的项目。截图、原始结果或图表统一放在 `starter-kit/evidence/files/`，也可以引用 `starter-kit/` 中已有的代码和文档。
+这份文件是人工评分材料的统一入口。请直接编辑它，只填写要申报的项目。截图、原始结果或图表统一放在 `starter_kit/evidence/files/`，也可以引用 `starter_kit/` 中已有的代码和文档。
 
 证据包是可选的。没有申报某项人工分时，留空即可，不影响自动评分。
 
@@ -96,4 +96,4 @@ evidence/files/spinq-screenshot.png
 - 外部视频可以用稳定只读链接，源码、原始结果和复现命令应保存在仓库中。
 - 整个 fork commit 的归档包不得超过 100 MiB。
 - 不要提交 API Key、Token、Cookie、个人身份信息或平台账户隐私。
-- 如申报 L1 真机分，在最终提交 Issue 的 `Hardware evidence` 中填写 `starter-kit/evidence/README.md`。
+- 如申报 L1 真机分，在最终提交 Issue 的 `Hardware evidence` 中填写 `starter_kit/evidence/README.md`。
