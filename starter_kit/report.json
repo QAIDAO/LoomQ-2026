@@ -1,34 +1,48 @@
 {
   "contract_version": "1.0",
   "suite": "public",
-  "generated_at": "2026-08-08T01:14:56.433618+00:00",
+  "generated_at": "2026-08-08T05:22:32.565543+00:00",
   "summary": {
-    "passed": 2,
-    "failed": 2,
-    "total": 4
+    "passed": 6,
+    "failed": 0,
+    "total": 6
   },
   "cases": [
     {
       "case_id": "l1:bell.qasm:spinq",
-      "status": "FAIL",
-      "reason": "RuntimeError: SpinQit SDK unavailable: dlopen(/Users/bangbang/Documents/LoomQ-2026/starter-kit/.venv/lib/python3.10/site-packages/spinqit/spinq_backends.cpython-310-darwin.so, 0x0002): Library not loaded: @rpath/libSpinQInterface_darwin_arm_64.dylib\n  Referenced from: <725D23EF-35D9-37A1-AB60-95BEE1A9FA50> /Users/bangbang/Documents/LoomQ-2026/starter-kit/.venv/lib/python3.10/site-packages/spinqit/spinq_backends.cpython-310-darwin.so\n  Reason: tried: '$ORIGIN/libSpinQInterface_darwin_arm_64.dylib' (no such file), '$ORIGIN/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/opt/homebrew/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/opt/homebrew/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/usr/local/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/usr/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file, not in dyld cache)"
-    },
-    {
-      "case_id": "l1:bell.qasm:originq",
       "status": "PASS",
       "reason": "fidelity threshold met",
       "fidelity": 1.0
     },
     {
+      "case_id": "l1:bell.qasm:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.99249
+    },
+    {
+      "case_id": "l1:bell.qasm:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.993699
+    },
+    {
       "case_id": "l1:ghz3.qasm:spinq",
-      "status": "FAIL",
-      "reason": "RuntimeError: SpinQit SDK unavailable: dlopen(/Users/bangbang/Documents/LoomQ-2026/starter-kit/.venv/lib/python3.10/site-packages/spinqit/spinq_backends.cpython-310-darwin.so, 0x0002): Library not loaded: @rpath/libSpinQInterface_darwin_arm_64.dylib\n  Referenced from: <725D23EF-35D9-37A1-AB60-95BEE1A9FA50> /Users/bangbang/Documents/LoomQ-2026/starter-kit/.venv/lib/python3.10/site-packages/spinqit/spinq_backends.cpython-310-darwin.so\n  Reason: tried: '$ORIGIN/libSpinQInterface_darwin_arm_64.dylib' (no such file), '$ORIGIN/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/opt/homebrew/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/opt/homebrew/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/usr/local/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file), '/usr/lib/libSpinQInterface_darwin_arm_64.dylib' (no such file, not in dyld cache)"
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
     },
     {
       "case_id": "l1:ghz3.qasm:originq",
       "status": "PASS",
       "reason": "fidelity threshold met",
-      "fidelity": 0.998792
+      "fidelity": 0.999137
+    },
+    {
+      "case_id": "l1:ghz3.qasm:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.994562
     }
   ],
   "notice": "Public self-check only; this report is not an official score."
