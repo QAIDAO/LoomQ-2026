@@ -11,7 +11,7 @@
 | `problem_statement.md` | 题面 Markdown 源，与 PDF 内容一致，便于线上阅读与检索 |
 | `LoomQ-赛题.docx` | 题面 Word 版（由 Markdown 源生成，公式为 Word 原生对象），供组委会流转编辑 |
 | `LoomQ-选手提交流程图.png` | 最终提交流程信息图，适合单独转发给选手 |
-| `starter-kit/` | 选手工具包 v1.1.0：提交清单、人工评分证据模板、L2 环境协议、公开自测、容器基线、RISC-V 模拟器、公开电路与上手资料 |
+| `starter_kit/` | 选手工具包 v1.1.0：提交清单、人工评分证据模板、L2 环境协议、公开自测、容器基线、RISC-V 模拟器、公开电路与上手资料 |
 
 ## 最终提交流程图
 
@@ -19,7 +19,7 @@
 
 ## 人工评分需要提交什么
 
-自动评分会直接运行 `starter-kit/` 中的程序。若要申报人工评分或 Bonus，只需填写 [`starter-kit/evidence/README.md`](starter-kit/evidence/README.md)。截图、原始结果或图表可以统一放入 `starter-kit/evidence/files/`。
+自动评分会直接运行 `starter_kit/` 中的程序。若要申报人工评分或 Bonus，只需填写 [`starter_kit/evidence/README.md`](starter_kit/evidence/README.md)。截图、原始结果或图表可以统一放入 `starter_kit/evidence/files/`。
 
 | 评分项 | 选手需要说明什么 | 可附材料 |
 |---|---|---|
@@ -43,18 +43,18 @@
 
 ### 正式提交的内容放在哪里？
 
-统一放在 fork 的 `starter-kit/` 中。组委会只把该目录提取为正式评测根目录。
+统一放在 fork 的 `starter_kit/` 中。组委会只把该目录提取为正式评测根目录。
 
 ### 人工评分证据必须提交吗？
 
-证据包本身是可选的。若要申报 L1 真机、L2 交互体验、工程与产品化或 Bonus，直接填写 [`starter-kit/evidence/README.md`](starter-kit/evidence/README.md) 即可。需要的附件统一放进 `starter-kit/evidence/files/`。未申报某项或未提交对应证据，只影响该项人工分，不影响自动评分。
+证据包本身是可选的。若要申报 L1 真机、L2 交互体验、工程与产品化或 Bonus，直接填写 [`starter_kit/evidence/README.md`](starter_kit/evidence/README.md) 即可。需要的附件统一放进 `starter_kit/evidence/files/`。未申报某项或未提交对应证据，只影响该项人工分，不影响自动评分。
 
 ### 提交前要运行什么？
 
 在 fork 根目录运行：
 
 ```bash
-python3 starter-kit/prepare_submission.py --team-id <GITHUB_USERNAME>
+python3 starter_kit/prepare_submission.py --team-id <GITHUB_USERNAME>
 ```
 
 预检会确认工作区干净、HEAD 已推送、fork 所有者与 Team ID 一致，并输出可填写到 Issue Form 的仓库地址和 40 位 commit SHA。

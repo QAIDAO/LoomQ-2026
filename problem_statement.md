@@ -82,7 +82,7 @@ graph TD
 
 **L2 到底要交付什么（按目标分数区分）**：
 
-- **只做客观部分（最高 20 分）**：不要求另做网页、App、桌面软件或图形界面。选手必须在 `starter-kit/adapter.py` 中提交可运行的 `agent_chat(prompt: str) -> str`：评测器会直接调用该函数；函数须读取组委会注入的 `LOOMQ_LLM_*` 配置，至少完成一次有效模型调用，并在返回文本中正确完成下述三类任务。通过 API 调用配合 Prompt／Agent 逻辑实现即可，技术栈不限。
+- **只做客观部分（最高 20 分）**：不要求另做网页、App、桌面软件或图形界面。选手必须在 `starter_kit/adapter.py` 中提交可运行的 `agent_chat(prompt: str) -> str`：评测器会直接调用该函数；函数须读取组委会注入的 `LOOMQ_LLM_*` 配置，至少完成一次有效模型调用，并在返回文本中正确完成下述三类任务。通过 API 调用配合 Prompt／Agent 逻辑实现即可，技术栈不限。
 - **冲完整 30 分**：在上述可自动评测代码之外，再提供一个可由零基础用户现场操作的 Agent 入口。网页、桌面／移动端或 CLI 均可，不强制图形界面；须在证据包中写明启动命令、测试入口和 3 个现场体验任务，工作人员以最终提交代码实际运行评分。
 - **不构成有效交付**：只提交 Prompt 文档、对话截图、录屏或由选手人工操作第三方聊天产品，均不能替代可运行的 `agent_chat` 代码或交互入口。
 
@@ -129,7 +129,7 @@ cx q[0], q[1];
 
 ## 四、提交契约 (Submission Interface)
 
-正式提交是选手对 `QAIDAO/LoomQ-2026` 的公开 fork，其中 **`starter-kit/` 是构建与评测根目录**，必须保留并填写 `starter-kit/submission.yaml`，同时提供 `starter-kit/adapter.py`。`submission.yaml` 声明 Starter Kit 版本、参赛 Level、运行时与网络需求；非 Python 技术栈可在 `adapter.py` 中通过 `subprocess` 调用自己的 CLI/二进制。评测只认固定接口行为，不限制内部技术栈。
+正式提交是选手对 `QAIDAO/LoomQ-2026` 的公开 fork，其中 **`starter_kit/` 是构建与评测根目录**，必须保留并填写 `starter_kit/submission.yaml`，同时提供 `starter_kit/adapter.py`。`submission.yaml` 声明 Starter Kit 版本、参赛 Level、运行时与网络需求；非 Python 技术栈可在 `adapter.py` 中通过 `subprocess` 调用自己的 CLI/二进制。评测只认固定接口行为，不限制内部技术栈。
 
 Starter Kit 合同版本为 **v1.0**。开赛后，v1.x 只做向后兼容的文档、诊断与公开测试更新；任何破坏性接口变更必须发布新合同版本，并保留旧版评测通道。
 
@@ -171,7 +171,7 @@ def compile_hybrid(hybrid_qasm_str: str) -> Tuple[list, str]:
 
 ### 最终提交流程
 
-1. 在 fork 根目录运行 `python3 starter-kit/prepare_submission.py --team-id <TEAM_ID>`，确认工作区干净、HEAD 已 push 且必需文件齐全。
+1. 在 fork 根目录运行 `python3 starter_kit/prepare_submission.py --team-id <TEAM_ID>`，确认工作区干净、HEAD 已 push 且必需文件齐全。
 2. 在 `QAIDAO/LoomQ-2026` 中创建“LoomQ 最终提交” Issue，填写队伍 ID、fork 地址与预检输出的完整 commit SHA。
 3. 自动校验通过后，Issue 会获得 `submission:accepted` 标签和包含归档 SHA-256 的回执；只有此状态构成有效提交。
 

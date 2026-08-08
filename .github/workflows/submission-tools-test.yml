@@ -19,7 +19,7 @@ jobs:
           persist-credentials: false
 
       - name: Compile submission tools
-        run: python3 -m py_compile competition/*.py starter-kit/prepare_submission.py
+        run: python3 -m py_compile competition/*.py starter_kit/prepare_submission.py
 
       - name: Run submission tooling tests
         run: python3 -m unittest discover -s tests -v

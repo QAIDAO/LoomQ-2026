@@ -28,7 +28,7 @@ SHA = "a" * 40
 
 
 def load_prepare_submission():
-    path = Path(__file__).resolve().parents[1] / "starter-kit" / "prepare_submission.py"
+    path = Path(__file__).resolve().parents[1] / "starter_kit" / "prepare_submission.py"
     spec = importlib.util.spec_from_file_location("loomq_prepare_submission_test", path)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
@@ -87,13 +87,13 @@ CONFIG = {
     "upstream": "QAIDAO/LoomQ-2026",
     "deadline": "2026-08-25T04:00:00Z",
     "deadline_display": "2026-08-25 12:00 UTC+8",
-    "submission_path": "starter-kit",
+    "submission_path": "starter_kit",
     "max_archive_bytes": 1024 * 1024,
     "required_files": [
-        "starter-kit/submission.yaml",
-        "starter-kit/adapter.py",
-        "starter-kit/Dockerfile",
-        "starter-kit/README.md",
+        "starter_kit/submission.yaml",
+        "starter_kit/adapter.py",
+        "starter_kit/Dockerfile",
+        "starter_kit/README.md",
     ],
 }
 
@@ -263,11 +263,11 @@ class ArchiveSafetyTests(unittest.TestCase):
             root = Path(tmp)
             archive = root / "source.tar.gz"
             make_tar(archive, [
-                ("repo-sha/starter-kit/adapter.py", "file", "ok"),
+                ("repo-sha/starter_kit/adapter.py", "file", "ok"),
                 ("repo-sha/README.md", "file", "not submission"),
             ])
             destination = root / "submission"
-            safe_extract_submission(archive, destination, "starter-kit", 10, 1000)
+            safe_extract_submission(archive, destination, "starter_kit", 10, 1000)
             self.assertEqual((destination / "adapter.py").read_text(), "ok")
             self.assertFalse((destination / "README.md").exists())
 
@@ -277,15 +277,15 @@ class ArchiveSafetyTests(unittest.TestCase):
             archive = root / "source.tar.gz"
             make_tar(archive, [("repo-sha/../escape", "file", "bad")])
             with self.assertRaisesRegex(SubmissionError, "不安全"):
-                safe_extract_submission(archive, root / "submission", "starter-kit", 10, 1000)
+                safe_extract_submission(archive, root / "submission", "starter_kit", 10, 1000)
 
     def test_rejects_symlink(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             archive = root / "source.tar.gz"
-            make_tar(archive, [("repo-sha/starter-kit/link", "symlink", "/etc/passwd")])
+            make_tar(archive, [("repo-sha/starter_kit/link", "symlink", "/etc/passwd")])
             with self.assertRaisesRegex(SubmissionError, "文件类型"):
-                safe_extract_submission(archive, root / "submission", "starter-kit", 10, 1000)
+                safe_extract_submission(archive, root / "submission", "starter_kit", 10, 1000)
 
     def test_artifact_wrapper_requires_single_archive(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -310,9 +310,9 @@ class ArchiveSafetyTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             archive = root / "source.tar.gz"
-            make_tar(archive, [("repo-sha/starter-kit/large.bin", "file", "12345")])
+            make_tar(archive, [("repo-sha/starter_kit/large.bin", "file", "12345")])
             with self.assertRaisesRegex(SubmissionError, "大小限制"):
-                safe_extract_submission(archive, root / "submission", "starter-kit", 10, 4)
+                safe_extract_submission(archive, root / "submission", "starter_kit", 10, 4)
 
 
 class CollectorEndToEndTests(unittest.TestCase):
@@ -320,7 +320,7 @@ class CollectorEndToEndTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             source = root / "source.tar.gz"
-            make_tar(source, [("repo-sha/starter-kit/adapter.py", "file", "collected")])
+            make_tar(source, [("repo-sha/starter_kit/adapter.py", "file", "collected")])
             archive_sha = hashlib.sha256(source.read_bytes()).hexdigest()
             wrapper = root / "artifact.zip"
             with zipfile.ZipFile(wrapper, "w") as bundle:
@@ -334,7 +334,7 @@ class CollectorEndToEndTests(unittest.TestCase):
                 "archive_sha256": archive_sha,
                 "artifact_id": 123,
                 "artifact_name": "submission-team-001-issue-7",
-                "submission_path": "starter-kit",
+                "submission_path": "starter_kit",
             }
             marker = f"<!-- loomq-submission-receipt:v1\n{json.dumps(receipt)}\n-->"
             issue = {
@@ -360,7 +360,7 @@ class CollectorEndToEndTests(unittest.TestCase):
             config = {
                 "upstream": "QAIDAO/LoomQ-2026",
                 "deadline": "2026-08-25T04:00:00Z",
-                "submission_path": "starter-kit",
+                "submission_path": "starter_kit",
                 "max_archive_bytes": 1024 * 1024,
                 "max_extracted_bytes": 1024 * 1024,
                 "max_files": 100,
