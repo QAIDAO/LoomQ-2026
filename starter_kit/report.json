@@ -1,0 +1,49 @@
+{
+  "contract_version": "1.0",
+  "suite": "public",
+  "generated_at": "2026-08-08T05:22:32.565543+00:00",
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6
+  },
+  "cases": [
+    {
+      "case_id": "l1:bell.qasm:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:bell.qasm:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.99249
+    },
+    {
+      "case_id": "l1:bell.qasm:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.993699
+    },
+    {
+      "case_id": "l1:ghz3.qasm:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:ghz3.qasm:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.999137
+    },
+    {
+      "case_id": "l1:ghz3.qasm:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.994562
+    }
+  ],
+  "notice": "Public self-check only; this report is not an official score."
+}

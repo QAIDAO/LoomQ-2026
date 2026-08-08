@@ -1,5 +1,5 @@
 # Public evaluator baseline: no third-party dependencies.
 # Add project dependencies below and pin every version exactly, for example:
-# amazon-braket-sdk==<tested-version>
-# spinqit==<tested-version>
-# pyqpanda==<tested-version>
+amazon-braket-sdk==1.99.0
+spinqit==0.2.4
+pyqpanda==3.8.1
