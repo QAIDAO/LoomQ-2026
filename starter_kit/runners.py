@@ -169,10 +169,10 @@ def run_braket(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]
 def run_originq(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]:
     """Execute on the official pyqpanda CPUQVM, fed the transpiled OriginIR.
 
-    ``_ORIGINIR_GATES`` already renders in the shared contract/pyqpanda form
-    (``RZ q[0],(θ)``/``CR q[0], q[1],(θ)``); the only lexical difference left is
-    pyqpanda spelling sdg/tdg as ``S#``/``T#`` instead of the contract's
-    ``SDAG``/``TDAG``, patched here before conversion.
+    ``_ORIGINIR_GATES`` renders every gate in a pyqpanda-native form: parameter
+    gates as ``RZ q[0],(θ)``/``CR q[0], q[1],(θ)``, and the phase-gate daggers
+    ``sdg``/``tdg`` as native U1 rotations.  The transpile output is therefore
+    fed verbatim to ``convert_originir_str_to_qprog``.
 
     pyqpanda returns little-endian counts keys (``c[0]`` rightmost), matching
     the contract, so no bit reversal is applied here.
@@ -182,26 +182,11 @@ def run_originq(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int
     except ImportError as exc:  # pragma: no cover
         raise RuntimeError("pyqpanda is required for the originq run path") from exc
 
-    origin_ir = (
-        native_qasm.replace("SDAG", "S#").replace("TDAG", "T#")
-        if "SDAG" in native_qasm or "TDAG" in native_qasm
-        else native_qasm
-    )
     machine = CPUQVM()
     machine.init_qvm()
     try:
-        # pyqpanda's C++ parser prints a harmless "token recognition error at
-        # '#'" on fd 2 for S#/T#; redirect the fd so SDK noise stays quiet.
-        saved_stderr = os.dup(2)
-        devnull = os.open(os.devnull, os.O_WRONLY)
-        try:
-            os.dup2(devnull, 2)
-            program, qubits, cbits = convert_originir_str_to_qprog(origin_ir, machine)
-            result = machine.run_with_configuration(program, cbits, shots)
-        finally:
-            os.dup2(saved_stderr, 2)
-            os.close(devnull)
-            os.close(saved_stderr)
+        program, qubits, cbits = convert_originir_str_to_qprog(native_qasm, machine)
+        result = machine.run_with_configuration(program, cbits, shots)
         return {str(key): int(value) for key, value in result.items()}
     finally:
         machine.finalize()

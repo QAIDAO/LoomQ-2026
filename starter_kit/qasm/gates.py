@@ -7,6 +7,7 @@ just a new :class:`TargetSpec`.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from typing import Callable, Dict, List, Union
 
@@ -124,6 +125,21 @@ def _param_after_qubits(emit_name: str) -> Callable[[Gate], List[str]]:
     return render
 
 
+def _originir_phase_gate(angle: float) -> Callable[[Gate], List[str]]:
+    """Render ``sdg``/``tdg`` as the native OriginIR ``U1`` gate.
+
+    QPanda's Origin-IR has no dagger keywords (``SDAG``/``TDAG``); per
+    gate_identities.md section 1, ``sdg = u1(-pi/2)`` and ``tdg = u1(-pi/4)``.
+    A `U1 q[i],(θ)` is the parameter-after-qubits form pyqpanda parses natively.
+    """
+
+    def render(gate: Gate) -> List[str]:
+        qubit = gate.qubits[0]
+        return [f"U1 q[{qubit.global_index}],({format_param(angle)})"]
+
+    return render
+
+
 def _originir_measure(measurement: Measurement) -> List[str]:
     return [
         f"MEASURE q[{qubit.global_index}], c[{cbit.global_index}]"
@@ -141,9 +157,9 @@ _ORIGINIR_GATES = {
     "h": "H",
     "x": "X",
     "s": "S",
-    "sdg": "SDAG",
+    "sdg": _originir_phase_gate(-math.pi / 2),
     "t": "T",
-    "tdg": "TDAG",
+    "tdg": _originir_phase_gate(-math.pi / 4),
     "rz": _param_after_qubits("RZ"),
     "ry": _param_after_qubits("RY"),
     "cx": "CNOT",
