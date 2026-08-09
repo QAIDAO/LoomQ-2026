@@ -7,8 +7,8 @@ feeding it an OriginIR re-render of the same :class:`Circuit`.
 
 from __future__ import annotations
 
-import os
 import tempfile
+from pathlib import Path
 from typing import Dict
 
 try:
@@ -30,23 +30,15 @@ def run_spinq(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]:
     )
     from spinqit.compiler.qasm_compiler import QASMCompiler
 
-    with tempfile.NamedTemporaryFile("w", suffix=".qasm", delete=False) as handle:
-        handle.write(native_qasm)
-        temp_path = handle.name
-    try:
-        ir = QASMCompiler().compile(temp_path, 0)
-        backend = BasicSimulatorBackend()
-        config = BasicSimulatorConfig()
-        config.configure_shots(shots)
-        result = backend.execute(ir, config)
-        return _little_endian(
-            {str(key): int(value) for key, value in result.counts.items()}
-        )
-    finally:
-        try:
-            os.unlink(temp_path)
-        except OSError:
-            pass
+    with tempfile.TemporaryDirectory() as temp_dir:
+        qasm_path = Path(temp_dir) / "circuit.qasm"
+        qasm_path.write_text(native_qasm, encoding="utf-8")
+        ir = QASMCompiler().compile(str(qasm_path), 0)
+
+    config = BasicSimulatorConfig()
+    config.configure_shots(shots)
+    result = BasicSimulatorBackend().execute(ir, config)
+    return _little_endian({str(key): int(value) for key, value in result.counts.items()})
 
 
 def run_braket(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]:
