@@ -58,20 +58,6 @@ def format_param(value: float) -> str:
     return format(value, ".12g")
 
 
-def _braket_cu1(gate: Gate) -> List[str]:
-    """cu1(θ) -> u1/cnot decomposition (see gate_identities.md section 4)."""
-    a = gate.qubits[0].token
-    b = gate.qubits[1].token
-    theta = gate.params[0]
-    return [
-        f"u1({format_param(theta / 2)}) {a};",
-        f"cnot {a}, {b};",
-        f"u1({format_param(-theta / 2)}) {b};",
-        f"cnot {a}, {b};",
-        f"u1({format_param(theta / 2)}) {b};",
-    ]
-
-
 def _qasm2_header(circuit: Circuit) -> List[str]:
     lines = ["OPENQASM 2.0;", 'include "qelib1.inc";']
     lines.extend(f"qreg {name}[{size}];" for name, size in circuit.qregs)
@@ -151,7 +137,10 @@ _QASM2_GATES = {name: name for name in WHITELIST}
 
 _QASM3_GATES = {name: name for name in WHITELIST}
 _QASM3_GATES["cx"] = "cnot"
-_QASM3_GATES["cu1"] = _braket_cu1
+_QASM3_GATES["sdg"] = "si"
+_QASM3_GATES["tdg"] = "ti"
+_QASM3_GATES["cu1"] = "cphaseshift"
+_QASM3_GATES["ccx"] = "ccnot"
 
 _ORIGINIR_GATES = {
     "h": "H",
