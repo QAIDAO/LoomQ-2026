@@ -53,9 +53,8 @@ def run(qasm_str: str, target: str, shots: int) -> Dict[str, Any]:
     if target_name not in SUPPORTED_TARGETS:
         raise ValueError(f"unsupported target: {target}")
 
-    circuit = parse_qasm(qasm_str)
     native_qasm = transpile(qasm_str, target_name)
-    counts = RUNNERS[target_name](native_qasm, circuit, shots)
+    counts = RUNNERS[target_name](native_qasm, shots)
 
     return {
         "backend": target_name,

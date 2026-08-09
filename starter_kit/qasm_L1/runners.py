@@ -1,8 +1,7 @@
 """Per-target execution backends.
 
-``run_spinq`` and ``run_braket`` execute the transpiled native text with the
-official SDKs; ``run_originq`` executes via pyqpanda's official CPUQVM,
-feeding it an OriginIR re-render of the same :class:`Circuit`.
+Each runner receives target-native text and executes it with the target's
+official SDK.
 """
 
 from __future__ import annotations
@@ -11,18 +10,12 @@ import tempfile
 from pathlib import Path
 from typing import Dict
 
-try:
-    from .ir import Circuit
-except ImportError:
-    from ir import Circuit
-
-
 def _little_endian(counts: Dict[str, int]) -> Dict[str, int]:
     """SDKs report keys with c[0] leftmost; the contract wants it rightmost."""
     return {key[::-1]: value for key, value in counts.items()}
 
 
-def run_spinq(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]:
+def run_spinq(native_qasm: str, shots: int) -> Dict[str, int]:
     """Execute native OpenQASM 2.0 on the SpinQit basic simulator."""
     from spinqit.backend.basic_simulator_backend import (
         BasicSimulatorBackend,
@@ -41,7 +34,7 @@ def run_spinq(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]:
     return _little_endian({str(key): int(value) for key, value in result.counts.items()})
 
 
-def run_braket(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]:
+def run_braket(native_qasm: str, shots: int) -> Dict[str, int]:
     """Execute native OpenQASM 3 on the AWS Braket local simulator."""
     from braket.devices import LocalSimulator
     from braket.ir.openqasm import Program as OpenQASMProgram
@@ -57,7 +50,7 @@ def run_braket(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]
     )
 
 
-def run_originq(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]:
+def run_originq(native_qasm: str, shots: int) -> Dict[str, int]:
     """Execute on the official pyqpanda CPUQVM, fed the transpiled OriginIR.
 
     ``_ORIGINIR_GATES`` renders every gate in a pyqpanda-native form: parameter
@@ -76,7 +69,7 @@ def run_originq(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int
     machine = CPUQVM()
     machine.init_qvm()
     try:
-        program, qubits, cbits = convert_originir_str_to_qprog(native_qasm, machine)
+        program, _, cbits = convert_originir_str_to_qprog(native_qasm, machine)
         result = machine.run_with_configuration(program, cbits, shots)
         return {str(key): int(value) for key, value in result.items()}
     finally:
