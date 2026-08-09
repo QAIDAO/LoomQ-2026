@@ -39,7 +39,9 @@ def run_spinq(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]:
         config = BasicSimulatorConfig()
         config.configure_shots(shots)
         result = backend.execute(ir, config)
-        return _little_endian({str(key): int(value) for key, value in result.counts.items()})
+        return _little_endian(
+            {str(key): int(value) for key, value in result.counts.items()}
+        )
     finally:
         try:
             os.unlink(temp_path)
@@ -58,7 +60,9 @@ def run_braket(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]
     braket3 = native_qasm.replace('include "stdgates.inc";', "")
     task = LocalSimulator().run(OpenQASMProgram(source=braket3), shots=shots)
     result = task.result()
-    return _little_endian({str(key): int(value) for key, value in result.measurement_counts.items()})
+    return _little_endian(
+        {str(key): int(value) for key, value in result.measurement_counts.items()}
+    )
 
 
 def run_originq(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]:
