@@ -107,6 +107,23 @@ def _qasm3_measure(measurement: Measurement) -> List[str]:
     ]
 
 
+def _param_after_qubits(emit_name: str) -> Callable[[Gate], List[str]]:
+    """Render parameter gates as ``NAME q[..], q[..],(θ)``.
+
+    The LoomQ contract accepts both `RY(θ) q[0]` and `RY q[0],(θ)` and allows
+    `CU1/CR`, so this spelling is contract-compliant *and* is the only form
+    pyqpanda's OriginIR parser understands.  One mapping therefore serves both
+    the transpile and the run path.
+    """
+
+    def render(gate: Gate) -> List[str]:
+        tokens = ", ".join(f"q[{ref.global_index}]" for ref in gate.qubits)
+        params = ", ".join(format_param(value) for value in gate.params)
+        return [f"{emit_name} {tokens},({params})"]
+
+    return render
+
+
 def _originir_measure(measurement: Measurement) -> List[str]:
     return [
         f"MEASURE q[{qubit.global_index}], c[{cbit.global_index}]"
@@ -127,10 +144,10 @@ _ORIGINIR_GATES = {
     "sdg": "SDAG",
     "t": "T",
     "tdg": "TDAG",
-    "rz": "RZ",
-    "ry": "RY",
+    "rz": _param_after_qubits("RZ"),
+    "ry": _param_after_qubits("RY"),
     "cx": "CNOT",
-    "cu1": "CU1",
+    "cu1": _param_after_qubits("CR"),
     "swap": "SWAP",
     "ccx": "TOFFOLI",
 }

@@ -2,4 +2,4 @@
 # Add project dependencies below and pin every version exactly, for example:
 amazon-braket-sdk==1.99.0
 spinqit==0.2.4
-pyqpanda==3.8.1
+pyqpanda==3.8.5

@@ -37,7 +37,7 @@ class Translator:
         return self._emit(qasm3_spec())
 
     def to_originq(self) -> str:
-        """OriginIR text (flat q/c registers)."""
+        """OriginIR text (flat q/c registers), official contract spelling."""
         return self._emit(originir_spec())
 
     def _emit(self, spec: TargetSpec) -> str:

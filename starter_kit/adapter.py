@@ -5,8 +5,8 @@ Thin facade over the translation pipeline:
 
     qasm/parser.py   OpenQASM 2.0 text -> Circuit IR
     qasm/emitter.py  Translator -> target-native text
-    simulator.py     state-vector simulator (originq run path)
-    runners.py       SDK execution backends (spinq / braket)
+    simulator.py     state-vector simulator (test oracle)
+    runners.py       SDK execution backends (spinq / braket / originq)
 
 The contract functions below never re-parse or re-implement platform logic;
 they only parse once and dispatch to a target.

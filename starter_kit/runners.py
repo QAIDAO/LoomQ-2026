@@ -1,8 +1,8 @@
 """Per-target execution backends.
 
 ``run_spinq`` and ``run_braket`` execute the transpiled native text with the
-official SDKs; ``run_originq`` uses the built-in state-vector simulator on the
-same :class:`Circuit` the emitters consume.
+official SDKs; ``run_originq`` executes via pyqpanda's official CPUQVM,
+feeding it an OriginIR re-render of the same :class:`Circuit`.
 """
 
 from __future__ import annotations
@@ -14,10 +14,8 @@ from typing import Any, Dict, List
 
 try:
     from .qasm.ir import Circuit
-    from .simulator import sample_counts
 except ImportError:
     from qasm.ir import Circuit
-    from simulator import sample_counts
 
 
 def _strip_comment(line: str) -> str:
@@ -77,7 +75,7 @@ def _parse_braket_text(native_qasm: str):
             for idx in range(int(bit_match.group(1))):
                 classical_names[f"{reg_name}[{idx}]"] = len(classical_names)
             continue
-        measure_match = re.match(r"^(\w+)\s*=\s*measure\s+(.+)\s*;\s*$", line)
+        measure_match = re.match(r"^([\w\[\]]+)\s*=\s*measure\s+([\w\[\]]+)\s*;\s*$", line)
         if measure_match:
             dest_text = measure_match.group(1).strip()
             source_text = measure_match.group(2).strip()
@@ -169,5 +167,41 @@ def run_braket(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]
 
 
 def run_originq(native_qasm: str, circuit: Circuit, shots: int) -> Dict[str, int]:
-    """Execute on the built-in state-vector simulator."""
-    return sample_counts(circuit, shots)
+    """Execute on the official pyqpanda CPUQVM, fed the transpiled OriginIR.
+
+    ``_ORIGINIR_GATES`` already renders in the shared contract/pyqpanda form
+    (``RZ q[0],(θ)``/``CR q[0], q[1],(θ)``); the only lexical difference left is
+    pyqpanda spelling sdg/tdg as ``S#``/``T#`` instead of the contract's
+    ``SDAG``/``TDAG``, patched here before conversion.
+
+    pyqpanda returns little-endian counts keys (``c[0]`` rightmost), matching
+    the contract, so no bit reversal is applied here.
+    """
+    try:
+        from pyqpanda import CPUQVM, convert_originir_str_to_qprog
+    except ImportError as exc:  # pragma: no cover
+        raise RuntimeError("pyqpanda is required for the originq run path") from exc
+
+    origin_ir = (
+        native_qasm.replace("SDAG", "S#").replace("TDAG", "T#")
+        if "SDAG" in native_qasm or "TDAG" in native_qasm
+        else native_qasm
+    )
+    machine = CPUQVM()
+    machine.init_qvm()
+    try:
+        # pyqpanda's C++ parser prints a harmless "token recognition error at
+        # '#'" on fd 2 for S#/T#; redirect the fd so SDK noise stays quiet.
+        saved_stderr = os.dup(2)
+        devnull = os.open(os.devnull, os.O_WRONLY)
+        try:
+            os.dup2(devnull, 2)
+            program, qubits, cbits = convert_originir_str_to_qprog(origin_ir, machine)
+            result = machine.run_with_configuration(program, cbits, shots)
+        finally:
+            os.dup2(saved_stderr, 2)
+            os.close(devnull)
+            os.close(saved_stderr)
+        return {str(key): int(value) for key, value in result.items()}
+    finally:
+        machine.finalize()
