@@ -12,9 +12,9 @@ from pathlib import Path
 from typing import Dict
 
 try:
-    from .qasm.ir import Circuit
+    from .ir import Circuit
 except ImportError:
-    from qasm.ir import Circuit
+    from ir import Circuit
 
 
 def _little_endian(counts: Dict[str, int]) -> Dict[str, int]:

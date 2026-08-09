@@ -3,10 +3,9 @@
 
 Thin facade over the translation pipeline:
 
-    qasm/parser.py   OpenQASM 2.0 text -> Circuit IR
-    qasm/emitter.py  Translator -> target-native text
-    simulator.py     state-vector simulator (test oracle)
-    runners.py       SDK execution backends (spinq / braket / originq)
+    qasm_L1/parser.py   OpenQASM 2.0 text -> Circuit IR
+    qasm_L1/emitter.py  Translator -> target-native text
+    qasm_L1/runners.py  SDK execution backends (spinq / braket / originq)
 
 The contract functions below never re-parse or re-implement platform logic;
 they only parse once and dispatch to a target.
@@ -16,13 +15,13 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Tuple
 
 try:
-    from . import runners
-    from .qasm.emitter import Translator
-    from .qasm.parser import parse_qasm
+    from .qasm_L1 import runners
+    from .qasm_L1.emitter import Translator
+    from .qasm_L1.parser import parse_qasm
 except ImportError:
-    import runners
-    from qasm.emitter import Translator
-    from qasm.parser import parse_qasm
+    from qasm_L1 import runners
+    from qasm_L1.emitter import Translator
+    from qasm_L1.parser import parse_qasm
 
 SUPPORTED_TARGETS = ("spinq", "originq", "braket")
 
