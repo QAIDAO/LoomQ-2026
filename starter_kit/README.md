@@ -5,7 +5,8 @@
 ## 提交结构
 
 ```text
-starter-kit/
+starter_kit/
+├── __init__.py
 ├── VERSION
 ├── CHANGELOG.md
 ├── submission.yaml
@@ -31,7 +32,13 @@ starter-kit/
 └── examples/
 ```
 
-在正式 fork 中，本 `starter-kit/` 目录就是构建与评测根目录，必须保留并填写 `submission.yaml`，同时提供 `adapter.py`。非 Python 项目可以在 `adapter.py` 中通过 `subprocess` 调用自己的 CLI 或二进制。
+在正式 fork 中，本 `starter_kit/` 目录就是构建与评测根目录，必须保留并填写 `submission.yaml`，同时提供 `adapter.py`。非 Python 项目可以在 `adapter.py` 中通过 `subprocess` 调用自己的 CLI 或二进制。
+
+目录名使用下划线，因此从 fork 根目录编写测试时可以按标准 Python 包导入：
+
+```python
+from starter_kit import adapter
+```
 
 ## 环境
 
@@ -91,7 +98,7 @@ python3 evaluator.py --level l3
 截止时间为 **2026-08-25 12:00 UTC+8**。先在 fork 根目录运行：
 
 ```bash
-python3 starter-kit/prepare_submission.py --team-id <GITHUB_USERNAME>
+python3 starter_kit/prepare_submission.py --team-id <GITHUB_USERNAME>
 ```
 
 当前不使用预登记队伍名单。每队指定一个 GitHub 提交账号，该账号的用户名就是 Team ID；fork 必须归该账号所有，并由同一账号创建最终提交 Issue。其他成员仍可作为协作者参与开发。预检通过后，在上游 `QAIDAO/LoomQ-2026` 的“LoomQ 最终提交” Issue Form 中填写输出的 fork 地址和 40 位 commit SHA。出现 `submission:accepted` 标签与归档哈希回执后才算提交成功。更新代码后必须新建 Issue，截止前最后一次有效提交生效。

@@ -6,12 +6,12 @@
 
 | 文件 / 目录 | 说明 |
 |---|---|
-| `LoomQ-赛题手册.pdf` | 正式题面（Typst 排版，8 页），用于官网发布与现场分发 |
+| `LoomQ-赛题手册.pdf` | 正式题面，用于官网发布与选手下载 |
 | `LoomQ-赛题.html` | 题面网页版（零依赖单文件：无 CDN、无外部字体、无框架），可直接作为活动官网赛题页部署 |
 | `problem_statement.md` | 题面 Markdown 源，与 PDF 内容一致，便于线上阅读与检索 |
 | `LoomQ-赛题.docx` | 题面 Word 版（由 Markdown 源生成，公式为 Word 原生对象），供组委会流转编辑 |
 | `LoomQ-选手提交流程图.png` | 最终提交流程信息图，适合单独转发给选手 |
-| `starter-kit/` | 选手工具包 v1.1.0：提交清单、人工评分证据模板、L2 环境协议、公开自测、容器基线、RISC-V 模拟器、公开电路与上手资料 |
+| `starter_kit/` | 选手工具包 v1.1.0：提交清单、人工评分证据模板、L2 环境协议、公开自测、容器基线、RISC-V 模拟器、公开电路与上手资料 |
 
 ## 最终提交流程图
 
@@ -19,12 +19,12 @@
 
 ## 人工评分需要提交什么
 
-自动评分会直接运行 `starter-kit/` 中的程序。若要申报人工评分或 Bonus，只需填写 [`starter-kit/evidence/README.md`](starter-kit/evidence/README.md)。截图、原始结果或图表可以统一放入 `starter-kit/evidence/files/`。
+自动评分会直接运行 `starter_kit/` 中的程序。若要申报人工评分或 Bonus，只需填写 [`starter_kit/evidence/README.md`](starter_kit/evidence/README.md)。截图、原始结果或图表可以统一放入 `starter_kit/evidence/files/`。
 
 | 评分项 | 选手需要说明什么 | 可附材料 |
 |---|---|---|
 | L1 真机，最高 10 分 | 平台、job ID、运行时间、shots、实际执行的 QASM 和原始结果路径 | 任务页截图 |
-| L2 交互体验，最高 10 分 | 界面或 CLI 的启动方法，以及 3 个适合现场体验的用户任务 | 关键流程截图或演示视频 |
+| L2 交互体验，最高 10 分 | 界面或 CLI 的启动方法，以及 3 个用户体验任务 | 关键流程截图或演示视频 |
 | 工程与产品复核，人工部分最高 5 分 | 构建和启动方法、主要模块、目标用户和完整使用流程 | 架构图、产品截图或已有项目文档 |
 | 自定义量子 RISC-V，最高加 8 分 | 指令编码规格、模拟器实现位置和端到端测试命令 | 无需额外材料，三项齐全且测试通过即可 |
 | 新手引导与视觉叙事，最高加 4 分 | 首次运行、概念解释、结果可视化、错误恢复或无障碍引导的位置 | 对应截图 |
@@ -32,6 +32,10 @@
 已有项目 README 或文档可以直接引用，不必为了评分重复写一份。工作人员只核验截止时归档的 commit，不接受截止后补交。截图不能代替可追溯的 job ID、原始结果或可运行代码。不要提交 API Key、Token、Cookie 或个人隐私。完整归档不得超过 100 MiB，大视频请使用稳定只读链接。
 
 ## 常见问题
+
+### 需要参加线下答辩吗？
+
+不需要。这是线上比赛，不设置线下答辩、现场演示或到场环节。选手只需按提交流程在截止时间前完成线上提交；组委会将依据归档代码、自动评测结果和已提交的证据材料进行评分与复核。
 
 ### 需要提前登记队伍名单吗？
 
@@ -43,18 +47,18 @@
 
 ### 正式提交的内容放在哪里？
 
-统一放在 fork 的 `starter-kit/` 中。组委会只把该目录提取为正式评测根目录。
+统一放在 fork 的 `starter_kit/` 中。组委会只把该目录提取为正式评测根目录。
 
 ### 人工评分证据必须提交吗？
 
-证据包本身是可选的。若要申报 L1 真机、L2 交互体验、工程与产品化或 Bonus，直接填写 [`starter-kit/evidence/README.md`](starter-kit/evidence/README.md) 即可。需要的附件统一放进 `starter-kit/evidence/files/`。未申报某项或未提交对应证据，只影响该项人工分，不影响自动评分。
+证据包本身是可选的。若要申报 L1 真机、L2 交互体验、工程与产品化或 Bonus，直接填写 [`starter_kit/evidence/README.md`](starter_kit/evidence/README.md) 即可。需要的附件统一放进 `starter_kit/evidence/files/`。未申报某项或未提交对应证据，只影响该项人工分，不影响自动评分。
 
 ### 提交前要运行什么？
 
 在 fork 根目录运行：
 
 ```bash
-python3 starter-kit/prepare_submission.py --team-id <GITHUB_USERNAME>
+python3 starter_kit/prepare_submission.py --team-id <GITHUB_USERNAME>
 ```
 
 预检会确认工作区干净、HEAD 已推送、fork 所有者与 Team ID 一致，并输出可填写到 Issue Form 的仓库地址和 40 位 commit SHA。

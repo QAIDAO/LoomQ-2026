@@ -15,14 +15,20 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
 try:
-    import adapter
+    from . import adapter
 except ImportError:
-    adapter = None
+    try:
+        import adapter
+    except ImportError:
+        adapter = None
 
 try:
-    from riscv_emulator import TinyRISCVEmulator
+    from .riscv_emulator import TinyRISCVEmulator
 except ImportError:
-    TinyRISCVEmulator = None
+    try:
+        from riscv_emulator import TinyRISCVEmulator
+    except ImportError:
+        TinyRISCVEmulator = None
 
 
 CONTRACT_VERSION = "1.0"

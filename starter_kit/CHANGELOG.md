@@ -1,5 +1,10 @@
 # Starter Kit Changelog
 
+## Unreleased
+
+- Use the importable `starter_kit/` name for the submission root.
+- Add `__init__.py` so tests can use `from starter_kit import adapter` directly.
+
 ## 1.1.0 - 2026-07-27
 
 - Publish the environment-only OpenAI-compatible L2 runtime contract.
@@ -11,7 +16,7 @@
 ## 1.0.1 - 2026-07-27
 
 - Add the read-only local final-submission preflight.
-- Define `starter-kit/` as the build and evaluation root in official forks.
+- Define `starter_kit/` as the build and evaluation root in official forks.
 - Document commit-SHA submission, server-side cutoff time, receipts, and resubmission rules.
 
 ## 1.0.0 - 2026-07-11

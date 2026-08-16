@@ -1,0 +1,23 @@
+LoomQ 线上赛规则修订验证记录
+日期：2026-08-12（Asia/Singapore）
+
+1. 禁用措辞检索
+   范围：仓库文本、DOCX document.xml、PDF 提取文本、提交流程图 OCR。
+   词组：用户指定的同步出席、同步陈述和指定地点演示类措辞。
+   结果：正式题面与发布文件中无要求选手同步出席、陈述或指定地点演示的内容；根目录 README 的常见问题仅以否定表述明确说明无需参加相关环节。
+
+2. 必要规则验证
+   - L2 用户入口改为“零基础用户直接操作”。
+   - 交互体验改为工作人员依据最终提交代码在统一评测环境中测试。
+   - 反作弊改为自动化变体复测与必要的代码审查。
+   - 系统原理改为写入 README 或架构文档，供异步审查。
+
+3. 版式验证
+   - HTML：Chrome 1200px 视口，无水平溢出；L2 修改段落截图见 qa/html-l2.png。
+   - DOCX：由 problem_statement.md 生成；macOS Quick Look 原生中文预览见 qa/docx-native-preview.png。
+   - PDF：A4，8 页；全页接触表及修改页见 qa/pdf-contact-sheet.png、qa/pdf-page-6.png、qa/pdf-page-7.png。
+   - 说明：LibreOffice 渲染器在本机对任意 DOCX 中文均漏字，原版与最小中文测试同样复现，因此 DOCX 视觉检查采用 macOS 原生预览。
+
+4. 自动化测试
+   命令：uv run --no-project --with pytest python -m pytest -q
+   结果：26 passed in 0.62s。

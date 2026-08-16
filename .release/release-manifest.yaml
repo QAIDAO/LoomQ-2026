@@ -1,0 +1,50 @@
+schema_version: 1
+release:
+  name: "LoomQ 线上赛规则修订"
+  version: "2026-08-12"
+  created_at: "2026-08-12"
+  timezone: "Asia/Singapore"
+canonical_source:
+  path: "problem_statement.md"
+  commit_or_revision: "working-tree-2026-08-12"
+  sha256: "531c53d56276b818984d26c05f84c374fe69f4341bbdb6ca77c12bed25bfb1f7"
+acceptance_card: ".release/acceptance-card.md"
+outputs:
+  - format: "html"
+    path: "LoomQ-赛题.html"
+    sha256: "282fbd76c6ae9ffcc36f0868cbac3d8da3569b86ae6a16e4881b81b7f278bb7d"
+    generated_from: "problem_statement.md"
+    validation:
+      status: pass
+      evidence:
+        - ".release/qa/html-l2.png"
+        - ".release/verification.txt"
+  - format: "docx"
+    path: "LoomQ-赛题.docx"
+    sha256: "7612fb596664688c727e5e00bc17f3dd9d9147da983210f34b317f8666c9a63b"
+    generated_from: "problem_statement.md"
+    validation:
+      status: pass
+      evidence:
+        - ".release/qa/docx-native-preview.png"
+        - ".release/verification.txt"
+  - format: "pdf"
+    path: "LoomQ-赛题手册.pdf"
+    sha256: "e0c16076b363024454a5529f6271056b86478b21dedc59c8c8aacf8587211612"
+    generated_from: "LoomQ-赛题.docx"
+    validation:
+      status: pass
+      evidence:
+        - ".release/qa/pdf-contact-sheet.png"
+        - ".release/qa/pdf-page-6.png"
+        - ".release/qa/pdf-page-7.png"
+        - ".release/verification.txt"
+supersedes: []
+blocked_items: []
+review:
+  status: pass
+  reviewer: "Codex"
+  reviewed_at: "2026-08-12"
+  evidence:
+    - ".release/acceptance-card.md"
+    - ".release/verification.txt"

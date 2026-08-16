@@ -1,3 +1,4 @@
+import importlib
 import importlib.util
 import json
 import os
@@ -9,8 +10,8 @@ from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CLIENT = ROOT / "starter-kit" / "llm_client.py"
-POLICY = ROOT / "starter-kit" / "l2_policy.json"
+CLIENT = ROOT / "starter_kit" / "llm_client.py"
+POLICY = ROOT / "starter_kit" / "l2_policy.json"
 
 
 def load_client():
@@ -41,6 +42,11 @@ class CompatibleAPIHandler(BaseHTTPRequestHandler):
 
 
 class PublicL2ContractTests(unittest.TestCase):
+    def test_adapter_supports_standard_package_import(self):
+        adapter = importlib.import_module("starter_kit.adapter")
+
+        self.assertEqual(adapter.SUPPORTED_TARGETS, ("spinq", "originq", "braket"))
+
     def test_policy_is_the_published_formal_deepseek_budget(self):
         policy = json.loads(POLICY.read_text(encoding="utf-8"))
         self.assertEqual(policy["formal_model"], "deepseek-v4-flash")

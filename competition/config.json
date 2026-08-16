@@ -4,15 +4,15 @@
   "team_identity": "github_issue_author",
   "deadline": "2026-08-25T04:00:00Z",
   "deadline_display": "2026-08-25 12:00 UTC+8",
-  "submission_path": "starter-kit",
+  "submission_path": "starter_kit",
   "artifact_retention_days": 90,
   "max_archive_bytes": 104857600,
   "max_extracted_bytes": 262144000,
   "max_files": 10000,
   "required_files": [
-    "starter-kit/submission.yaml",
-    "starter-kit/adapter.py",
-    "starter-kit/Dockerfile",
-    "starter-kit/README.md"
+    "starter_kit/submission.yaml",
+    "starter_kit/adapter.py",
+    "starter_kit/Dockerfile",
+    "starter_kit/README.md"
   ]
 }
