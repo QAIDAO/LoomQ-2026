@@ -52,7 +52,9 @@ def main():
         "shots": shots,
         "counts": dict(counts),
         "bit_order": "little",
-        "timestamp": result.additional_metadata.action.startTime if hasattr(result, 'additional_metadata') else "2026-07-06T10:00:00Z",
+        "timestamp": getattr(getattr(result.additional_metadata.action, 'startTime', None), 'isoformat', lambda: "2026-07-06T10:00:00Z")()
+        if hasattr(result, 'additional_metadata') and hasattr(result.additional_metadata, 'action')
+        else "2026-07-06T10:00:00Z",
         "meta": {
             "qubits_count": 2,
             "depth": len(result.measured_qubits)
