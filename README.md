@@ -86,3 +86,9 @@ python3 starter_kit/prepare_submission.py --team-id <GITHUB_USERNAME>
 ### fork 或分支在截止后被删除怎么办？
 
 每次有效提交都会即时归档为 GitHub Actions Artifact。组委会截止后从归档收集，不依赖 fork 在评分时仍然存在；选手仍应保留 fork 便于复核。
+
+## 许可证
+
+除文件中另有说明的第三方内容外，本仓库中的 starter kit、赛题文档、公开评测工具和提交工具均采用 [Apache License 2.0](LICENSE)。你可以按照该许可证公开、修改和再分发这些内容。分发修改版本时，请保留适用的版权、许可和署名信息，并明确标注所作修改。
+
+Apache-2.0 不授予赛事名称、项目名称或 Logo 的商标使用权。修改后的赛题文档应清楚标注为非官方版本，避免与组委会发布的正式规则混淆。
